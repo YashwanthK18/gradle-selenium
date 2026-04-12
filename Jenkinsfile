@@ -2,24 +2,25 @@ pipeline {
     agent any  // Use any available agent
 
     tools {
-        maven 'Maven'  // Ensure this matches the name configured in Jenkins
+        gradle 'Gradle'  // Ensure this matches the name configured in Jenkins
+        jdk 'JDK'
     }
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'master', url: 'https://github.com/YashwanthK18/MyMavenApp'
+                git branch: 'master', url: 'https://github.com/YashwanthK18/gradle-selenium.git'
             }
         }
 
         stage('Build') {
             steps {
-                sh 'mvn clean package'  // Run Maven build
+                sh 'gradle build'  // Run Gradle build
             }
         }
 
         stage('Test') {
             steps {
-                sh 'mvn test'  // Run unit tests
+                sh 'gradle test'  // Run unit tests
             }
         }
 
@@ -29,7 +30,7 @@ pipeline {
         stage('Run Application') {
             steps {
                 // Start the JAR application
-                sh 'java -jar target/MyMavenApp-1.0-SNAPSHOT.jar'
+                sh 'gradle run'
             }
         }
 
